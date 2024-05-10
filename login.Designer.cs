@@ -28,37 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            splitContainer1 = new SplitContainer();
+            panel1 = new Panel();
+            txtUserName = new TextBox();
+            txtPassword = new TextBox();
+            button1 = new Button();
             pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // splitContainer1
+            // panel1
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 0);
-            splitContainer1.Name = "splitContainer1";
+            panel1.BackColor = Color.FromArgb(0, 69, 202);
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(320, 450);
+            panel1.TabIndex = 0;
             // 
-            // splitContainer1.Panel2
+            // txtUserName
             // 
-            splitContainer1.Panel2.Controls.Add(pictureBox1);
-            splitContainer1.Size = new Size(800, 450);
-            splitContainer1.SplitterDistance = 266;
-            splitContainer1.TabIndex = 0;
+            txtUserName.BackColor = Color.WhiteSmoke;
+            txtUserName.Location = new Point(442, 175);
+            txtUserName.Multiline = true;
+            txtUserName.Name = "txtUserName";
+            txtUserName.Size = new Size(236, 34);
+            txtUserName.TabIndex = 1;
+            // 
+            // txtPassword
+            // 
+            txtPassword.BackColor = Color.WhiteSmoke;
+            txtPassword.Location = new Point(442, 246);
+            txtPassword.Multiline = true;
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(236, 34);
+            txtPassword.TabIndex = 2;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(0, 69, 202);
+            button1.Cursor = Cursors.Hand;
+            button1.FlatAppearance.BorderColor = Color.FromArgb(0, 69, 202);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 126, 222);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(477, 328);
+            button1.Name = "button1";
+            button1.Size = new Size(168, 40);
+            button1.TabIndex = 3;
+            button1.Text = "Login";
+            button1.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.Image = Properties.Resources.cross;
-            pictureBox1.Location = new Point(494, 3);
+            pictureBox1.Location = new Point(755, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(33, 30);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 1;
+            pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
@@ -66,21 +94,27 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(800, 450);
-            Controls.Add(splitContainer1);
+            Controls.Add(pictureBox1);
+            Controls.Add(button1);
+            Controls.Add(txtPassword);
+            Controls.Add(txtUserName);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "login";
             Text = "login";
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private SplitContainer splitContainer1;
+        private Panel panel1;
+        private TextBox txtUserName;
+        private TextBox txtPassword;
+        private Button button1;
         private PictureBox pictureBox1;
     }
 }
