@@ -70,6 +70,8 @@
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 126, 222);
             button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Maiandra GD", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
             button1.Location = new Point(477, 328);
             button1.Name = "button1";
             button1.Size = new Size(168, 40);
