@@ -10,6 +10,9 @@ namespace Hotel_Management_System
         private void pictureBox1_Click(object sender, EventArgs e)
         {
           this.Close(); 
+            login login = new login();
+            
+            login.Close();
         }
     }
 }

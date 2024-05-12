@@ -24,36 +24,42 @@ namespace Hotel_Management_System
         {
             this.Close();
         }
-
         private void login_Load(object sender, EventArgs e)
         {
+            tsProgressBar.Enabled = true;
+            tsProgressBar.Value = 20;
             string databaseName = "hotel_management";
             if (!CheckIfDatabaseExists(databaseName))
             {
-                // if (ConnectToDatabase(databaseName))
-                //{
-                if (!CheckIfTablesExist(databaseName,  "users"))
-                {
-                    CreateTables(databaseName);
-
-                }
-                 // }                
+                tsProgressBar.Value = 50;
+                CreateDatabase(databaseName);
+                CreateTables(databaseName);
+                tsProgressBar.Value = 100;
             }
             else
             {
-                MessageBox.Show("Failed to connect to the database.");
-                CreateDatabase(databaseName);
+                tsProgressBar.Value = 50;
+                if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "users"))
+                {
+                    tsProgressBar.Value = 70;
+                    CreateTables(databaseName);
+                    tsProgressBar.Value = 100;
+                }
             }
+            tsProgressBar.Value = 100;
+            ConnectToDatabase(databaseName);
+            tsProgressBar.Enabled = false;
+            tsProgressBar.Value = 0;
         }
 
         private bool CheckIfDatabaseExists(string databaseName)
         {
             // Check if the database exists
             bool exists = false;
-            // string connectionString = "servaer=localhost;user id=root;password=;";
+            // string connectionString = "server=localhost;user id=root;password=;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand($"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{databaseName}'", connection))
+                using (SqlCommand command = new SqlCommand($"SELECT name FROM sys.databases WHERE name = '{databaseName}'", connection))
                 {
                     connection.Open();
                     if (command.ExecuteScalar() != null)
@@ -64,6 +70,7 @@ namespace Hotel_Management_System
             }
             return exists;
         }
+
 
         private void CreateDatabase(string databaseName)
         {
@@ -81,7 +88,6 @@ namespace Hotel_Management_System
                     // Create the database
                     command.CommandText = $"CREATE DATABASE {databaseName}";
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Created to database.");
                 }
             }
         }
@@ -94,11 +100,12 @@ namespace Hotel_Management_System
                 try
                 {
                     connection.Open();
-                    MessageBox.Show("Connected to database.");
+                    lblAtatus.Text = "Connected";
                     return true;
                 }
                 catch (Exception ex)
                 {
+                    lblAtatus.Text= ex.Message;
                     MessageBox.Show("Error connecting to database: " + ex.Message);
                     return false;
                 }
@@ -164,9 +171,10 @@ namespace Hotel_Management_System
 
             // SQL query to insert the default user
             string query = $"INSERT INTO users (userName, password) VALUES (@userName, @password);";
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
 
             // Create a SqlConnection object
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
             {
                 // Create a SqlCommand object with the query and connection
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -181,11 +189,12 @@ namespace Hotel_Management_System
                     command.ExecuteNonQuery();
                 }
             }
-            MessageBox.Show("Default user added successfully.");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            tsProgressBar.Enabled = true;
+            tsProgressBar.Value = 30;
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
 
@@ -197,15 +206,20 @@ namespace Hotel_Management_System
 
             if (AuthenticateUser(userName, password))
             {
-                MessageBox.Show("Login successful.");
-                login login = new login();
-                login.Close();
+                tsProgressBar.Value = 50;
+
+                //  tsProgressBar.Enabled = false;
+               this.Hide();
+                tsProgressBar.Value = 100;
                 Form2 form2 = new Form2();
+                tsProgressBar.Value = 0;
                 form2.ShowDialog();
                 // Redirect to main form or perform other actions here
             }
             else
             {
+                tsProgressBar.Enabled = false;
+                tsProgressBar.Value = 0;
                 MessageBox.Show("Invalid username or password.");
             }
         }
@@ -236,7 +250,7 @@ namespace Hotel_Management_System
             picEyeHide.Visible = false;
             picEyeShow.Visible = true;
             txtPassword.PasswordChar = '\0';
-            txtPassword.Font= new Font(txtPassword.Font.FontFamily, 11, txtPassword.Font.Style); ;
+            txtPassword.Font = new Font(txtPassword.Font.FontFamily, 11, txtPassword.Font.Style); ;
         }
 
         private void picEyeShow_Click(object sender, EventArgs e)
@@ -245,5 +259,6 @@ namespace Hotel_Management_System
             picEyeHide.Visible = true;
             txtPassword.PasswordChar = '⚫';
         }
+
     }
 }

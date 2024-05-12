@@ -44,11 +44,16 @@
             label5 = new Label();
             picEyeHide = new PictureBox();
             picEyeShow = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            tsProgressBar = new ToolStripProgressBar();
+            lblAtatus = new ToolStripStatusLabel();
+            process1 = new System.Diagnostics.Process();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picEyeHide).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picEyeShow).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -235,12 +240,37 @@
             picEyeShow.Visible = false;
             picEyeShow.Click += picEyeShow_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { tsProgressBar, lblAtatus });
+            statusStrip1.Location = new Point(0, 428);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.RenderMode = ToolStripRenderMode.Professional;
+            statusStrip1.Size = new Size(800, 22);
+            statusStrip1.TabIndex = 12;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // tsProgressBar
+            // 
+            tsProgressBar.Name = "tsProgressBar";
+            tsProgressBar.Size = new Size(100, 16);
+            // 
+            // lblAtatus
+            // 
+            lblAtatus.Font = new Font("Calisto MT", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAtatus.ForeColor = Color.DarkGreen;
+            lblAtatus.Name = "lblAtatus";
+            lblAtatus.Size = new Size(62, 17);
+            lblAtatus.Text = "Connected";
+            // 
+            
             // login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(800, 450);
+            Controls.Add(statusStrip1);
             Controls.Add(picEyeShow);
             Controls.Add(picEyeHide);
             Controls.Add(label4);
@@ -264,6 +294,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picEyeHide).EndInit();
             ((System.ComponentModel.ISupportInitialize)picEyeShow).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -285,5 +317,9 @@
         private Label label6;
         private PictureBox picEyeHide;
         private PictureBox picEyeShow;
+        private StatusStrip statusStrip1;
+        private ToolStripProgressBar tsProgressBar;
+        private ToolStripStatusLabel lblAtatus;
+        private System.Diagnostics.Process process1;
     }
 }

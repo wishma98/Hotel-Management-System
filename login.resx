@@ -1973,7 +1973,7 @@
   <data name="picEyeShow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAZ4AAAEQCAYAAACAxhKnAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAZhtJREFUeF7t3QmshFWZ4P2ennFBQURAVBRtFRm7p3uWntXZnG5bbUTcQBQRUVRQ
+        DAAACwwBP0AiyAAAZhtJREFUeF7t3QmshFWZ4P2ennFBQURAVBRtFRm7p3uWntXZnG5bbUTcQBQRUVRQ
         EQRUEIFWFhUURTZFEAU3pAUTZpyg6YTOQAwhH21GJ44dQhjCMERCNDKahhGsr36vefBwfO69VXXft5Z7
         z03+qapzq96zPcvZz++MRqNGo9FoNOZGGthoNBqNxlCkgY1Go9FoDEUa2Gg0Go3GUKSBjUaj0WgMRRrY
         aDQajcZQpIGNRqPRaAxFGthoNBqNxlCkgY1Go9FoDEUa2Gg0Go3GUKSBjUaj0WgMRRrYaDQajcZQpIGN
@@ -2412,4 +2412,10 @@
         1wAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="process1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
 </root>
