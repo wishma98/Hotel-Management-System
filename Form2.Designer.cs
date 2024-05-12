@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -36,10 +37,10 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
-            pictureBox1.Image = Properties.Resources.cross;
-            pictureBox1.Location = new Point(1016, 7);
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(1107, 10);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(33, 30);
+            pictureBox1.Size = new Size(50, 42);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -49,9 +50,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.hotel_reception;
-            BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(1061, 641);
+            BackgroundImage = Properties.Resources.hotel_reception1;
+            BackgroundImageLayout = ImageLayout.Zoom;
+            ClientSize = new Size(1167, 707);
             ControlBox = false;
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
