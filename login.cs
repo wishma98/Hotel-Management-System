@@ -106,7 +106,7 @@ namespace Hotel_Management_System
                 catch (Exception ex)
                 {
                     lblAtatus.Text= ex.Message;
-                    MessageBox.Show("Error connecting to database: " + ex.Message);
+                    MessageBox.Show("Error connecting database: " + ex.Message);
                     return false;
                 }
             }
