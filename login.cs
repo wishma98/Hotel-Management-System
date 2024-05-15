@@ -105,7 +105,7 @@ namespace Hotel_Management_System
                 }
                 catch (Exception ex)
                 {
-                    lblAtatus.Text= ex.Message;
+                    lblAtatus.Text = ex.Message;
                     MessageBox.Show("Error connecting database: " + ex.Message);
                     return false;
                 }
@@ -209,11 +209,11 @@ namespace Hotel_Management_System
                 tsProgressBar.Value = 50;
 
                 //  tsProgressBar.Enabled = false;
-               this.Hide();
+                this.Hide();
                 tsProgressBar.Value = 100;
-                Form2 form2 = new Form2();
+                FormDashbord FormDashbord = new FormDashbord();
                 tsProgressBar.Value = 0;
-                form2.ShowDialog();
+                FormDashbord.ShowDialog();
                 // Redirect to main form or perform other actions here
             }
             else
@@ -260,5 +260,9 @@ namespace Hotel_Management_System
             txtPassword.PasswordChar = '⚫';
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

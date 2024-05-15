@@ -73,6 +73,26 @@ namespace Hotel_Management_System.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap D_logo {
+            get {
+                object obj = ResourceManager.GetObject("D_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dash {
+            get {
+                object obj = ResourceManager.GetObject("dash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap hotel_reception {
             get {
                 object obj = ResourceManager.GetObject("hotel-reception", resourceCulture);
@@ -86,6 +106,16 @@ namespace Hotel_Management_System.Properties {
         internal static System.Drawing.Bitmap hotel_reception1 {
             get {
                 object obj = ResourceManager.GetObject("hotel-reception1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logout {
+            get {
+                object obj = ResourceManager.GetObject("logout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
