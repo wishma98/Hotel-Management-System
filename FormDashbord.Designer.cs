@@ -42,14 +42,19 @@ namespace Hotel_Management_System
             buttonRes = new Button();
             buttonSet = new Button();
             panel2 = new Panel();
+            settings1 = new settings();
+            add_rooms1 = new add_rooms();
             panel3 = new Panel();
             label2 = new Label();
             label1 = new Label();
             pictureBox2 = new PictureBox();
             panel1 = new Panel();
+            panel6 = new Panel();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel2.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel1.SuspendLayout();
@@ -219,11 +224,27 @@ namespace Hotel_Management_System
             // 
             // panel2
             // 
+            panel2.Controls.Add(settings1);
+            panel2.Controls.Add(add_rooms1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(327, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1021, 673);
             panel2.TabIndex = 0;
+            // 
+            // settings1
+            // 
+            settings1.Location = new Point(0, 183);
+            settings1.Name = "settings1";
+            settings1.Size = new Size(1021, 490);
+            settings1.TabIndex = 1;
+            // 
+            // add_rooms1
+            // 
+            add_rooms1.Location = new Point(0, 183);
+            add_rooms1.Name = "add_rooms1";
+            add_rooms1.Size = new Size(1021, 490);
+            add_rooms1.TabIndex = 0;
             // 
             // panel3
             // 
@@ -272,6 +293,7 @@ namespace Hotel_Management_System
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(51, 165, 172);
+            panel1.Controls.Add(panel6);
             panel1.Controls.Add(buttonDash);
             panel1.Controls.Add(buttonCli);
             panel1.Controls.Add(buttonRoom);
@@ -284,6 +306,13 @@ namespace Hotel_Management_System
             panel1.Size = new Size(327, 673);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // panel6
+            // 
+            panel6.Location = new Point(327, 183);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(952, 487);
+            panel6.TabIndex = 6;
             // 
             // FormDashbord
             // 
@@ -302,6 +331,7 @@ namespace Hotel_Management_System
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -310,11 +340,6 @@ namespace Hotel_Management_System
         }
 
         private void buttonRes_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void buttonRoom_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
@@ -348,5 +373,9 @@ namespace Hotel_Management_System
         private Label label1;
         private PictureBox pictureBox2;
         private Panel panel1;
+        private Panel panel6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private add_rooms add_rooms1;
+        private settings settings1;
     }
 }

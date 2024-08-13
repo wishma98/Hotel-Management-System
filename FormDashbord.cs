@@ -67,9 +67,15 @@ namespace Hotel_Management_System
 
         }
 
+        private void buttonRoom_Click(object sender, EventArgs e)
+        {
+            add_rooms1.BringToFront();
+
+        }
+
         private void buttonSet_Click(object sender, EventArgs e)
         {
-
+            settings1.BringToFront();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
