@@ -42,8 +42,9 @@ namespace Hotel_Management_System
             buttonRes = new Button();
             buttonSet = new Button();
             panel2 = new Panel();
-            settings1 = new settings();
+            client1 = new client();
             add_rooms1 = new add_rooms();
+            settings1 = new settings();
             panel3 = new Panel();
             label2 = new Label();
             label1 = new Label();
@@ -51,6 +52,7 @@ namespace Hotel_Management_System
             panel1 = new Panel();
             panel6 = new Panel();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            dashboard1 = new dashboard();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -69,7 +71,7 @@ namespace Hotel_Management_System
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(327, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(1021, 183);
+            panel4.Size = new Size(1050, 183);
             panel4.TabIndex = 0;
             panel4.Paint += panel4_Paint;
             // 
@@ -104,7 +106,7 @@ namespace Hotel_Management_System
             panel5.Controls.Add(pictureBox1);
             panel5.Location = new Point(0, 0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(1021, 99);
+            panel5.Size = new Size(1050, 99);
             panel5.TabIndex = 0;
             panel5.Paint += panel5_Paint;
             // 
@@ -116,7 +118,7 @@ namespace Hotel_Management_System
             linkLabellogout.DisabledLinkColor = Color.FromArgb(51, 165, 172);
             linkLabellogout.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             linkLabellogout.LinkColor = Color.FromArgb(51, 165, 172);
-            linkLabellogout.Location = new Point(919, 36);
+            linkLabellogout.Location = new Point(948, 36);
             linkLabellogout.Name = "linkLabellogout";
             linkLabellogout.Size = new Size(91, 28);
             linkLabellogout.TabIndex = 0;
@@ -130,7 +132,7 @@ namespace Hotel_Management_System
             // 
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(834, 18);
+            pictureBox1.Location = new Point(863, 18);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(118, 65);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -224,27 +226,38 @@ namespace Hotel_Management_System
             // 
             // panel2
             // 
-            panel2.Controls.Add(settings1);
+            panel2.Controls.Add(dashboard1);
+            panel2.Controls.Add(client1);
             panel2.Controls.Add(add_rooms1);
+            panel2.Controls.Add(settings1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(327, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1021, 673);
+            panel2.Size = new Size(1050, 692);
             panel2.TabIndex = 0;
+            // 
+            // client1
+            // 
+            client1.BackColor = Color.White;
+            client1.Location = new Point(0, 183);
+            client1.Name = "client1";
+            client1.Size = new Size(1848, 978);
+            client1.TabIndex = 3;
+            // 
+            // add_rooms1
+            // 
+            add_rooms1.BackColor = Color.White;
+            add_rooms1.Location = new Point(0, 183);
+            add_rooms1.Name = "add_rooms1";
+            add_rooms1.Size = new Size(1848, 978);
+            add_rooms1.TabIndex = 2;
             // 
             // settings1
             // 
             settings1.Location = new Point(0, 183);
             settings1.Name = "settings1";
-            settings1.Size = new Size(1021, 490);
+            settings1.Size = new Size(1050, 509);
             settings1.TabIndex = 1;
-            // 
-            // add_rooms1
-            // 
-            add_rooms1.Location = new Point(0, 183);
-            add_rooms1.Name = "add_rooms1";
-            add_rooms1.Size = new Size(1021, 490);
-            add_rooms1.TabIndex = 0;
             // 
             // panel3
             // 
@@ -303,9 +316,8 @@ namespace Hotel_Management_System
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(327, 673);
+            panel1.Size = new Size(327, 692);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // panel6
             // 
@@ -314,11 +326,19 @@ namespace Hotel_Management_System
             panel6.Size = new Size(952, 487);
             panel6.TabIndex = 6;
             // 
+            // dashboard1
+            // 
+            dashboard1.BackColor = Color.White;
+            dashboard1.Location = new Point(0, 183);
+            dashboard1.Name = "dashboard1";
+            dashboard1.Size = new Size(1848, 978);
+            dashboard1.TabIndex = 5;
+            // 
             // FormDashbord
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1348, 673);
+            ClientSize = new Size(1377, 692);
             Controls.Add(panel4);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -344,16 +364,6 @@ namespace Hotel_Management_System
             throw new NotImplementedException();
         }
 
-        private void buttonCli_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void buttonDash_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
         private Panel panel4;
         private Panel panel5;
@@ -375,7 +385,9 @@ namespace Hotel_Management_System
         private Panel panel1;
         private Panel panel6;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private add_rooms add_rooms1;
         private settings settings1;
+        private add_rooms add_rooms1;
+        private client client1;
+        private dashboard dashboard1;
     }
 }

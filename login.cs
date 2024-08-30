@@ -45,6 +45,24 @@ namespace Hotel_Management_System
                     CreateTables(databaseName);
                     tsProgressBar.Value = 100;
                 }
+                 if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "client"))
+                {
+                    tsProgressBar.Value = 70;
+                    CreateClientTable(databaseName);
+                    tsProgressBar.Value = 100;
+                }
+                if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "reservation"))
+                {
+                    tsProgressBar.Value = 70;
+                    CreateReservationTable(databaseName);
+                    tsProgressBar.Value = 100;
+                }
+                if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "rooms"))
+                {
+                    tsProgressBar.Value = 70;
+                    CreateRoomTable(databaseName);
+                    tsProgressBar.Value = 100;
+                }
             }
             tsProgressBar.Value = 100;
             ConnectToDatabase(databaseName);
@@ -146,22 +164,57 @@ namespace Hotel_Management_System
                 string createLoginTable1 = "CREATE TABLE users (id INT IDENTITY(1,1) PRIMARY KEY, userName VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL)";
                 using (SqlCommand createLoginTable1CommandText = new SqlCommand(createLoginTable1, connection))
                 {
-                    createLoginTable1CommandText.ExecuteNonQuery();
+                   createLoginTable1CommandText.ExecuteNonQuery();
                 }
-                // Create your_table1
-                //    string createTable1CommandText = $"CREATE TABLE {tableName1} (id INT IDENTITY(1,1) PRIMARY KEY, name VARCHAR(50))";
-                //    using (SqlCommand createTable1Command = new SqlCommand(createTable1CommandText, connection))
-                //    {
-                // createTable1Command.ExecuteNonQuery();
-                //    }
-                // Create your_table2
-                //   string createTable2CommandText = $"CREATE TABLE {tableName2} (id INT IDENTITY(1,1) PRIMARY KEY, age INT)";
-                //   using (SqlCommand createTable2Command = new SqlCommand(createTable2CommandText, connection))
-                //    {
-                // createTable2Command.ExecuteNonQuery();
-                //    }
             }
             AddDefaultUser();
+        }
+
+        private void CreateRoomTable(string databaseName)
+        {
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog={databaseName}";
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            {
+                connection.Open();
+
+                string createTable1CommandText = "CREATE TABLE rooms (roomId INT IDENTITY(1,1) PRIMARY KEY, roomType VARCHAR(50), roomNo VARCHAR(50), bedType VARCHAR(50), meals VARCHAR(100), price FLOAT)";
+                using (SqlCommand createTable1Command = new SqlCommand(createTable1CommandText, connection))
+                {
+                    createTable1Command.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        private void CreateClientTable(string databaseName)
+        {
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog={databaseName}";
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            {
+                connection.Open();
+
+                string createTable1CommandText = "CREATE TABLE client (clientId INT IDENTITY(1,1) PRIMARY KEY, name VARCHAR(50), idNo VARCHAR(12), mobileNo VARCHAR(10), address VARCHAR(100))";
+                using (SqlCommand createTable1Command = new SqlCommand(createTable1CommandText, connection))
+                {
+                    createTable1Command.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        private void CreateReservationTable(string databaseName)
+        {
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog={databaseName}";
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            {
+                connection.Open();
+
+                string createTable2CommandText = "CREATE TABLE reservation (reservationId INT IDENTITY(1,1) PRIMARY KEY, clientId INT, roomId INT, startDate DATE, closeDate DATE)";
+                using (SqlCommand createTable2Command = new SqlCommand(createTable2CommandText, connection))
+                {
+                    createTable2Command.ExecuteNonQuery();
+                }
+            }
         }
 
         private void AddDefaultUser()

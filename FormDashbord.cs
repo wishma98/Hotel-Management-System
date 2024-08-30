@@ -78,9 +78,14 @@ namespace Hotel_Management_System
             settings1.BringToFront();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void buttonCli_Click(object sender, EventArgs e)
         {
+            client1.BringToFront();
+        }
 
+        private void buttonDash_Click(object sender, EventArgs e)
+        {
+            dashboard1.BringToFront();
         }
     }
 }
