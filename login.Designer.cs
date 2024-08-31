@@ -48,6 +48,7 @@
             tsProgressBar = new ToolStripProgressBar();
             lblAtatus = new ToolStripStatusLabel();
             process1 = new System.Diagnostics.Process();
+            linkLabel1 = new LinkLabel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -67,7 +68,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(366, 600);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // label7
             // 
@@ -112,6 +112,7 @@
             txtUserName.Margin = new Padding(3, 4, 3, 4);
             txtUserName.Multiline = true;
             txtUserName.Name = "txtUserName";
+            txtUserName.PlaceholderText = "User name";
             txtUserName.Size = new Size(269, 39);
             txtUserName.TabIndex = 1;
             txtUserName.TextAlign = HorizontalAlignment.Center;
@@ -125,6 +126,7 @@
             txtPassword.Multiline = true;
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '⚫';
+            txtPassword.PlaceholderText = "⚫⚫⚫⚫";
             txtPassword.Size = new Size(269, 39);
             txtPassword.TabIndex = 2;
             txtPassword.TextAlign = HorizontalAlignment.Center;
@@ -192,7 +194,7 @@
             label3.FlatStyle = FlatStyle.Flat;
             label3.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
             label3.ForeColor = Color.Red;
-            label3.Location = new Point(582, 187);
+            label3.Location = new Point(587, 178);
             label3.Name = "label3";
             label3.Size = new Size(18, 21);
             label3.TabIndex = 7;
@@ -205,7 +207,7 @@
             label4.FlatStyle = FlatStyle.Flat;
             label4.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(573, 296);
+            label4.Location = new Point(580, 290);
             label4.Name = "label4";
             label4.Size = new Size(18, 21);
             label4.TabIndex = 9;
@@ -226,7 +228,7 @@
             // 
             picEyeHide.BackColor = Color.Transparent;
             picEyeHide.Image = (Image)resources.GetObject("picEyeHide.Image");
-            picEyeHide.Location = new Point(742, 347);
+            picEyeHide.Location = new Point(742, 345);
             picEyeHide.Margin = new Padding(3, 4, 3, 4);
             picEyeHide.Name = "picEyeHide";
             picEyeHide.Size = new Size(32, 35);
@@ -239,7 +241,7 @@
             // 
             picEyeShow.BackColor = Color.Transparent;
             picEyeShow.Image = (Image)resources.GetObject("picEyeShow.Image");
-            picEyeShow.Location = new Point(742, 347);
+            picEyeShow.Location = new Point(742, 345);
             picEyeShow.Margin = new Padding(3, 4, 3, 4);
             picEyeShow.Name = "picEyeShow";
             picEyeShow.Size = new Size(32, 35);
@@ -286,12 +288,26 @@
             process1.StartInfo.UserName = "";
             process1.SynchronizingObject = this;
             // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Cursor = Cursors.Hand;
+            linkLabel1.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            linkLabel1.Location = new Point(610, 511);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(73, 24);
+            linkLabel1.TabIndex = 13;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Sign Up";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
             // login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(914, 600);
+            Controls.Add(linkLabel1);
             Controls.Add(statusStrip1);
             Controls.Add(picEyeShow);
             Controls.Add(picEyeHide);
@@ -344,5 +360,6 @@
         private ToolStripProgressBar tsProgressBar;
         private ToolStripStatusLabel lblAtatus;
         private System.Diagnostics.Process process1;
+        private LinkLabel linkLabel1;
     }
 }

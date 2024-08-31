@@ -16,7 +16,10 @@ namespace Hotel_Management_System
     {
         private string connectionString = "Data Source=localhost;Initial Catalog=master;Integrated Security=True";
         bool isSelectData = false;
-        int clientId = 0;
+        public int clientId = 0;
+        public int roomId = 0;
+        public int amount = 0;
+
         public client()
         {
             InitializeComponent();
@@ -24,17 +27,89 @@ namespace Hotel_Management_System
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            if (txtName.Text == "")
+            {
+                lblName.Visible = true;
+            }
+            if (txtId.Text == "")
+            {
+                lblId.Visible = true;
+            }
+            if (comboRoomType.Text == "")
+            {
+                lblRoom.Visible = true;
+            }
+            if (dateTimePicker1.Text == "")
+            {
+                lblStart.Visible = true;
+            }
+            if (txtAmount.Text == "")
+            {
+                lblAmount.Visible = true;
+            }
+            if (isSelectData && txtName.Text == "" && txtId.Text == "" && comboRoomType.Text == "" && dateTimePicker1.Text == "")
+            {
+                AddReservation();
+                dataGridView1.Visible = false;
+                reservationGridView.Visible = true;
+            }
 
+        }
+
+        private void AddReservation()
+        {
+            string startDate, paymentType = "", paymentAmount = "0";
+
+            startDate = dateTimePicker1.Text;
+            paymentAmount = txtAmount.Text;
+
+            if (radioButton1.Checked)
+            {
+                paymentType = "Advance";
+            }
+            if (radioButton2.Checked)
+            {
+                paymentType = "Full";
+            }
+
+            string query = $"INSERT INTO reservation (clientId, roomId, startDate, paymentType, paymentAmount) VALUES (@clientId, @roomId, @startDate, @paymentType, @paymentAmount);";
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
+
+            // Create a SqlConnection object
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            {
+                // Create a SqlCommand object with the query and connection
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Add parameters to the command
+                    command.Parameters.AddWithValue("@clientId", clientId);
+                    command.Parameters.AddWithValue("@roomId", roomId);
+                    command.Parameters.AddWithValue("@startDate", startDate);
+                    command.Parameters.AddWithValue("@paymentType", paymentType);
+                    command.Parameters.AddWithValue("@paymentAmount", paymentAmount);
+
+                    // Open the connection
+                    connection.Open();
+                    // Execute the query
+                    int result = command.ExecuteNonQuery();
+                    if (result > 0)
+                    {
+                        LoadDataIntoDataGridView();
+                        LoadDataIntoReservationGridView();
+                    }
+                }
+            }
         }
 
         private void client_Load(object sender, EventArgs e)
         {
-            lblAddress.Visible = false;
+            lblAmount.Visible = false;
             lblMobile.Visible = false;
             lblId.Visible = false;
             lblName.Visible = false;
             lblRoom.Visible = false;
             lblStart.Visible = false;
+            dataGridView1.BringToFront();
             LoadDataIntoDataGridView();
         }
 
@@ -65,26 +140,60 @@ namespace Hotel_Management_System
             }
         }
 
+        private void LoadDataIntoReservationGridView()
+        {
+            string connectionString = "Data Source=localhost;Initial Catalog=hotel_management;Integrated Security=True;";
+            string query = "SELECT reservation.reservationId, client.name AS clientName, reservation.clientId, reservation.roomId, rooms.roomNo, reservation.startDate, reservation.closeDate, reservation.paymentType, reservation.paymentMethord, reservation.paymentAmount FROM reservation INNER JOIN client ON reservation.clientId = client.clientId INNER JOIN rooms ON reservation.roomId = rooms.roomId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Bind the DataTable to the DataGridView
+                        reservationGridView.DataSource = dataTable;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             btnAdd.Enabled = true;
             btnAdd.BackColor = Color.FromArgb(51, 165, 172);
+            lblName.Visible = false;
         }
 
         private void clearAll()
         {
-            txtAddress.Text = "";
-            txtId.Text = "";
+            txtAddress.Text = string.Empty;
+            txtId.Text = string.Empty;
             txtMobileNo.Text = string.Empty;
             txtName.Text = string.Empty;
             dateTimePicker1.Text = string.Empty;
             lblHeader.Text = "Add Client";
+            comboRoomType.Text = "";
+            dateTimePicker1.Text = "";
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            btnDelete.BackColor = Color.DimGray;
+            btnDelete.Enabled = false;
+            dataGridView1.BringToFront();
         }
 
         private void AddClient()
         {
             String name, idNo, mobileNo, address;
-            double price;
 
             name = txtName.Text;
             idNo = txtId.Text;
@@ -109,23 +218,40 @@ namespace Hotel_Management_System
                     // Open the connection
                     connection.Open();
                     // Execute the query
-                    object result = command.ExecuteScalar();
-                    if (result != null)
+                    int result = command.ExecuteNonQuery();
+                    if (result > 0)
                     {
+                        MessageBox.Show("Client added successfully!");
                         LoadDataIntoDataGridView();
                         clientId = GetClientByIdNo(idNo);
                         btnClientAdd.Visible = false;
                         btnClientCancel.Visible = false;
                         btnDelete.Visible = false;
-                        label10.Visible = true;
                         label11.Visible = true;
                         comboRoomType.Visible = true;
                         dateTimePicker1.Visible = true;
+                        txtMobileNo.Visible = false;
+                        txtAddress.Visible = false;
+                        btnClientCancel.Visible = false;
+                        btnClientAdd.Visible = false;
+                        btnDelete.Visible = false;
+                        lblMobileH.Visible = false;
+                        lblAddressH.Visible = false;
+                        label9.Visible = false;
+                        label8.Visible = false;
                         label16.Visible = true;
                         label17.Visible = true;
                         btnAdd.Visible = true;
                         btnClear.Visible = true;
+                        radioButton1.Visible = true;
+                        radioButton2.Visible = true;
+                        label1.Visible = true;
+                        label12.Visible = true;
+                        label5.Visible = true;
+                        label9.Visible = true;
+                        txtAmount.Visible = true;
                         lblHeader.Text = "Add Reservation";
+                        isSelectData = true;
                         LoadRoomNumbersIntoComboBox();
                     }
                 }
@@ -136,40 +262,32 @@ namespace Hotel_Management_System
         {
             String name, idNo, mobileNo, address;
 
-            // Retrieve data from textboxes
             name = txtName.Text;
             idNo = txtId.Text;
             mobileNo = txtMobileNo.Text;
             address = txtAddress.Text;
 
-            // SQL query to update the client's information
             string query = $"UPDATE client SET name = @name, mobileNo = @mobileNo, address = @address WHERE idNo = @idNo;";
             string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
 
-            // Create a SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
             {
-                // Create a SqlCommand object with the query and connection
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    // Add parameters to the command
                     command.Parameters.AddWithValue("@name", name);
-                    command.Parameters.AddWithValue("@idNo", idNo); // Assuming idNo is the unique identifier
+                    command.Parameters.AddWithValue("@idNo", idNo);
                     command.Parameters.AddWithValue("@mobileNo", mobileNo);
                     command.Parameters.AddWithValue("@address", address);
 
-                    // Open the connection
                     connection.Open();
-                    // Execute the query
+
                     int result = command.ExecuteNonQuery();
                     if (result > 0)
                     {
-                        // Update was successful, update UI elements
                         LoadDataIntoDataGridView();
                         btnClientAdd.Visible = false;
                         btnClientCancel.Visible = false;
                         btnDelete.Visible = false;
-                        label10.Visible = true;
                         label11.Visible = true;
                         comboRoomType.Visible = true;
                         dateTimePicker1.Visible = true;
@@ -193,28 +311,24 @@ namespace Hotel_Management_System
             if (txtName.Text == "")
             {
                 lblName.Visible = true;
-                return;
             }
             if (txtId.Text == "")
             {
                 lblId.Visible = true;
-                return;
             }
             if (txtMobileNo.Text == "")
             {
                 lblMobile.Visible = true;
-                return;
             }
             if (txtAddress.Text == "")
             {
-                lblAddress.Visible = true;
-                return;
+                lblAmount.Visible = true;
             }
-            if (!isSelectData)
+            if (!isSelectData && txtName.Text != "" && txtId.Text != "" && txtMobileNo.Text != "" && txtAddress.Text != "")
             {
                 AddClient();
             }
-            else
+            if (isSelectData && txtName.Text != "" && txtId.Text != "" && txtMobileNo.Text != "" && txtAddress.Text != "")
             {
                 UpdateClient();
             }
@@ -225,7 +339,7 @@ namespace Hotel_Management_System
         private int GetClientByIdNo(string idNo)
         {
             int getClientId = 0;
-            string query = "SELECT clientId, name, idNo, mobileNo, address FROM client WHERE idNo = @idNo;";
+            string query = "SELECT clientId FROM client WHERE idNo = @idNo;";
             string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
 
             try
@@ -263,57 +377,89 @@ namespace Hotel_Management_System
             return getClientId;
         }
 
-        private void AddReservation()
+        private int GetRoomIdByRoomNo(string roomNo)
         {
-            String name, idNo, mobileNo, address;
-            double price;
-
-            name = txtName.Text;
-            idNo = txtId.Text;
-            mobileNo = txtMobileNo.Text;
-            address = txtAddress.Text;
-
-            string query = $"INSERT INTO client (name, idNo, mobileNo, address) VALUES (@name, @idNo, @mobileNo, @address);";
+            int getRoomId = 0;
+            string query = "SELECT roomId FROM rooms WHERE roomNo = @roomNo;";
             string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
 
-            // Create a SqlConnection object
-            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            try
             {
-                // Create a SqlCommand object with the query and connection
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
                 {
-                    // Add parameters to the command
-                    command.Parameters.AddWithValue("@name", name);
-                    command.Parameters.AddWithValue("@idNo", idNo);
-                    command.Parameters.AddWithValue("@mobileNo", mobileNo);
-                    command.Parameters.AddWithValue("@address", address);
-
-                    // Open the connection
-                    connection.Open();
-                    // Execute the query
-                    int result = command.ExecuteNonQuery();
-                    if (result > 0)
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        LoadDataIntoDataGridView();
-                        btnClientAdd.Visible = false;
-                        btnClientCancel.Visible = false;
-                        btnDelete.Visible = false;
-                        label10.Visible = true;
-                        label11.Visible = true;
-                        comboRoomType.Visible = true;
-                        dateTimePicker1.Visible = true;
-                        label16.Visible = true;
-                        label17.Visible = true;
-                        btnAdd.Visible = true;
-                        btnClear.Visible = true;
-                        lblHeader.Text = "Add Reservation";
-                        LoadRoomNumbersIntoComboBox();
+                        // Add the parameter for idNo
+                        command.Parameters.AddWithValue("@roomNo", roomNo);
+
+                        // Open the connection
+                        connection.Open();
+
+                        // Execute the query
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Assuming you want to display or use these values
+                                getRoomId = reader.GetInt32(0);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Room not found.");
+                            }
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+            return getRoomId;
         }
 
-        private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private int GetRoomIdByRoomAmount(string roomNo)
+        {
+            int getRoomAmount = 0;
+            string query = "SELECT price FROM rooms WHERE roomNo = @roomNo;";
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Add the parameter for idNo
+                        command.Parameters.AddWithValue("@roomNo", roomNo);
+
+                        // Open the connection
+                        connection.Open();
+
+                        // Execute the query
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Assuming you want to display or use these values
+                                getRoomAmount = reader.GetInt32(0);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Room not found.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+            return getRoomAmount;
+        }
+
+        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Ensure the click is on a valid row (not the header or a non-existent row)
             if (e.RowIndex >= 0)
@@ -414,33 +560,49 @@ namespace Hotel_Management_System
             }
         }
 
-        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void comboRoomType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                txtName.Text = dataGridView1.Rows[e.RowIndex].Cells["name"].Value.ToString();
-                txtId.Text = dataGridView1.Rows[e.RowIndex].Cells["idNo"].Value.ToString();
-                txtMobileNo.Text = dataGridView1.Rows[e.RowIndex].Cells["mobileNo"].Value.ToString();
-                txtAddress.Text = dataGridView1.Rows[e.RowIndex].Cells["address"].Value.ToString();
+            lblRoom.Visible = false;
+            string roomNo = comboRoomType.Text;
 
-                btnDelete.Enabled = true;
-                btnDelete.BackColor = Color.Brown;
-                btnAdd.Enabled = true;
-                btnAdd.BackColor = Color.FromArgb(51, 165, 172);
-                btnClientCancel.Visible = false;
-                btnClientAdd.Visible = false;
-                btnDelete.Visible = false;
-                label10.Visible = true;
-                label11.Visible = true;
-                comboRoomType.Visible = true;
-                dateTimePicker1.Visible = true;
-                label16.Visible = true;
-                label17.Visible = true;
-                btnAdd.Visible = true;
-                btnClear.Visible = true;
-                lblHeader.Text = "Add Reservation";
-                isSelectData = true;
-            }
+            roomId = GetRoomIdByRoomNo(roomNo);
+            amount = GetRoomIdByRoomAmount(roomNo);
+        }
+
+        private void btnClientCancel_Click(object sender, EventArgs e)
+        {
+            clearAll();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtAmount.Text = (amount / 2).ToString();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            txtAmount.Text = amount.ToString();
+        }
+
+        private void txtId_TextChanged(object sender, EventArgs e)
+        {
+            lblId.Visible = false;
+        }
+
+        private void txtMobileNo_TextChanged(object sender, EventArgs e)
+        {
+
+            lblMobile.Visible = false;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            lblStart.Visible = false;
+        }
+
+        private void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            lblAmount.Visible = false;
         }
     }
 }

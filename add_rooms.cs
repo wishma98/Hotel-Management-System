@@ -269,10 +269,8 @@ namespace Hotel_Management_System
 
         private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // Ensure the click is on a valid row (not the header or a non-existent row)
             if (e.RowIndex >= 0)
             {
-                // Retrieve values from the selected row and assign them to the TextBoxes
                 comboRoomType.Text = dataGridView1.Rows[e.RowIndex].Cells["roomType"].Value.ToString();
                 txtRoomNo.Text = dataGridView1.Rows[e.RowIndex].Cells["roomNo"].Value.ToString();
                 comboBedType.Text = dataGridView1.Rows[e.RowIndex].Cells["bedType"].Value.ToString();
@@ -291,17 +289,13 @@ namespace Hotel_Management_System
         {
             if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
             {
-                // Get the selected roomId from the DataGridView
                 int roomId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["roomId"].Value);
 
-                // Confirm deletion
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this room?", "Confirm Delete", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    // Delete the row from the database
                     DeleteRowFromDatabase(roomId);
 
-                    // Remove the row from the DataGridView
                     dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
                     clearAll();
 

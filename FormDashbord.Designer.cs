@@ -40,19 +40,20 @@ namespace Hotel_Management_System
             buttonCli = new Button();
             buttonRoom = new Button();
             buttonRes = new Button();
-            buttonSet = new Button();
             panel2 = new Panel();
-            client1 = new client();
+            dashboard1 = new dashboard();
             add_rooms1 = new add_rooms();
-            settings1 = new settings();
+            client1 = new client();
+            addReservations1 = new addReservations();
+            reservations2 = new reservations();
             panel3 = new Panel();
             label2 = new Label();
             label1 = new Label();
             pictureBox2 = new PictureBox();
             panel1 = new Panel();
             panel6 = new Panel();
+            buttonAddRes = new Button();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            dashboard1 = new dashboard();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -73,7 +74,6 @@ namespace Hotel_Management_System
             panel4.Name = "panel4";
             panel4.Size = new Size(1050, 183);
             panel4.TabIndex = 0;
-            panel4.Paint += panel4_Paint;
             // 
             // labelUsername
             // 
@@ -96,7 +96,6 @@ namespace Hotel_Management_System
             label3.Size = new Size(155, 37);
             label3.TabIndex = 3;
             label3.Text = "Welcome : ";
-            label3.Click += label3_Click;
             // 
             // panel5
             // 
@@ -108,7 +107,6 @@ namespace Hotel_Management_System
             panel5.Name = "panel5";
             panel5.Size = new Size(1050, 99);
             panel5.TabIndex = 0;
-            panel5.Paint += panel5_Paint;
             // 
             // linkLabellogout
             // 
@@ -207,57 +205,63 @@ namespace Hotel_Management_System
             buttonRes.UseVisualStyleBackColor = true;
             buttonRes.Click += buttonRes_Click;
             // 
-            // buttonSet
-            // 
-            buttonSet.FlatAppearance.BorderSize = 0;
-            buttonSet.FlatStyle = FlatStyle.Flat;
-            buttonSet.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonSet.ForeColor = Color.White;
-            buttonSet.Image = (Image)resources.GetObject("buttonSet.Image");
-            buttonSet.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonSet.Location = new Point(45, 508);
-            buttonSet.Name = "buttonSet";
-            buttonSet.Size = new Size(282, 62);
-            buttonSet.TabIndex = 5;
-            buttonSet.Text = "    Setting";
-            buttonSet.TextImageRelation = TextImageRelation.ImageBeforeText;
-            buttonSet.UseVisualStyleBackColor = true;
-            buttonSet.Click += buttonSet_Click;
-            // 
             // panel2
             // 
             panel2.Controls.Add(dashboard1);
-            panel2.Controls.Add(client1);
             panel2.Controls.Add(add_rooms1);
-            panel2.Controls.Add(settings1);
+            panel2.Controls.Add(client1);
+            panel2.Controls.Add(addReservations1);
+            panel2.Controls.Add(reservations2);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(327, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1050, 692);
             panel2.TabIndex = 0;
             // 
-            // client1
+            // dashboard1
             // 
-            client1.BackColor = Color.White;
-            client1.Location = new Point(0, 183);
-            client1.Name = "client1";
-            client1.Size = new Size(1848, 978);
-            client1.TabIndex = 3;
+            dashboard1.BackColor = Color.White;
+            dashboard1.BorderStyle = BorderStyle.FixedSingle;
+            dashboard1.Location = new Point(0, 183);
+            dashboard1.Name = "dashboard1";
+            dashboard1.Size = new Size(1848, 1065);
+            dashboard1.TabIndex = 9;
             // 
             // add_rooms1
             // 
             add_rooms1.BackColor = Color.White;
-            add_rooms1.Location = new Point(0, 183);
+            add_rooms1.Location = new Point(3, 183);
             add_rooms1.Name = "add_rooms1";
             add_rooms1.Size = new Size(1848, 978);
             add_rooms1.TabIndex = 2;
             // 
-            // settings1
+            // client1
             // 
-            settings1.Location = new Point(0, 183);
-            settings1.Name = "settings1";
-            settings1.Size = new Size(1050, 509);
-            settings1.TabIndex = 1;
+            client1.AutoScroll = true;
+            client1.AutoScrollMinSize = new Size(1259, 653);
+            client1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            client1.BackColor = Color.White;
+            client1.Location = new Point(0, 183);
+            client1.Name = "client1";
+            client1.Size = new Size(1821, 1079);
+            client1.TabIndex = 10;
+            client1.UseWaitCursor = true;
+            // 
+            // addReservations1
+            // 
+            addReservations1.BackColor = Color.White;
+            addReservations1.Location = new Point(0, 183);
+            addReservations1.Name = "addReservations1";
+            addReservations1.Size = new Size(1848, 1105);
+            addReservations1.TabIndex = 11;
+            // 
+            // reservations2
+            // 
+            reservations2.BackColor = Color.White;
+            reservations2.Location = new Point(0, 183);
+            reservations2.Name = "reservations2";
+            reservations2.Size = new Size(1848, 1105);
+            reservations2.TabIndex = 12;
             // 
             // panel3
             // 
@@ -291,7 +295,6 @@ namespace Hotel_Management_System
             label1.Size = new Size(257, 37);
             label1.TabIndex = 1;
             label1.Text = "Hotel Management";
-            label1.Click += label1_Click;
             // 
             // pictureBox2
             // 
@@ -310,8 +313,8 @@ namespace Hotel_Management_System
             panel1.Controls.Add(buttonDash);
             panel1.Controls.Add(buttonCli);
             panel1.Controls.Add(buttonRoom);
+            panel1.Controls.Add(buttonAddRes);
             panel1.Controls.Add(buttonRes);
-            panel1.Controls.Add(buttonSet);
             panel1.Controls.Add(panel3);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
@@ -326,13 +329,22 @@ namespace Hotel_Management_System
             panel6.Size = new Size(952, 487);
             panel6.TabIndex = 6;
             // 
-            // dashboard1
+            // buttonAddRes
             // 
-            dashboard1.BackColor = Color.White;
-            dashboard1.Location = new Point(0, 183);
-            dashboard1.Name = "dashboard1";
-            dashboard1.Size = new Size(1848, 978);
-            dashboard1.TabIndex = 5;
+            buttonAddRes.FlatAppearance.BorderSize = 0;
+            buttonAddRes.FlatStyle = FlatStyle.Flat;
+            buttonAddRes.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonAddRes.ForeColor = Color.White;
+            buttonAddRes.Image = (Image)resources.GetObject("buttonAddRes.Image");
+            buttonAddRes.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonAddRes.Location = new Point(42, 508);
+            buttonAddRes.Name = "buttonAddRes";
+            buttonAddRes.Size = new Size(282, 63);
+            buttonAddRes.TabIndex = 4;
+            buttonAddRes.Text = "    Add Reservation";
+            buttonAddRes.TextImageRelation = TextImageRelation.ImageBeforeText;
+            buttonAddRes.UseVisualStyleBackColor = true;
+            buttonAddRes.Click += buttonAddRes_Click;
             // 
             // FormDashbord
             // 
@@ -346,6 +358,7 @@ namespace Hotel_Management_System
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
+            Load += FormDashbord_Load;
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel5.ResumeLayout(false);
@@ -359,10 +372,6 @@ namespace Hotel_Management_System
             ResumeLayout(false);
         }
 
-        private void buttonRes_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
         private Panel panel4;
@@ -372,12 +381,10 @@ namespace Hotel_Management_System
         private Label label3;
         private Label labelUsername;
         private Button buttonDash;
-        private Button buttonSet;
         private Button buttonRes;
         private Button buttonRoom;
         private Button buttonCli;
         private Panel panel2;
-        private Button button1;
         private Panel panel3;
         private Label label2;
         private Label label1;
@@ -385,9 +392,12 @@ namespace Hotel_Management_System
         private Panel panel1;
         private Panel panel6;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private settings settings1;
         private add_rooms add_rooms1;
-        private client client1;
         private dashboard dashboard1;
+        private client client1;
+        private Button buttonAddRes;
+        private addReservations reservations1;
+        private addReservations addReservations1;
+        private reservations reservations2;
     }
 }

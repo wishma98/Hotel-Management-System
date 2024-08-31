@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel Management System", "Hotel Management System.csproj", "{F71EDC24-73D3-40A0-B031-BC976D41D3F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel Management System", "Hotel Management System.csproj", "{F71EDC24-73D3-40A0-B031-BC976D41D3F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B2CCE029-B7F6-449E-A336-4F5EB8049D53}"
+	ProjectSection(SolutionItems) = preProject
+		Session.cs = Session.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

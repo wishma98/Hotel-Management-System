@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Hotel_Management_System
 {
     public partial class login : Form
     {
         private string connectionString = "Data Source=localhost;Initial Catalog=master;Integrated Security=True";
+
+        public int userId = 0;
 
         public login()
         {
@@ -22,7 +25,7 @@ namespace Hotel_Management_System
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
         private void login_Load(object sender, EventArgs e)
         {
@@ -45,7 +48,7 @@ namespace Hotel_Management_System
                     CreateTables(databaseName);
                     tsProgressBar.Value = 100;
                 }
-                 if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "client"))
+                if (CheckIfDatabaseExists(databaseName) && !CheckIfTablesExist(databaseName, "client"))
                 {
                     tsProgressBar.Value = 70;
                     CreateClientTable(databaseName);
@@ -89,21 +92,14 @@ namespace Hotel_Management_System
             return exists;
         }
 
-
         private void CreateDatabase(string databaseName)
         {
-            // Connection string to the MySQL server (without specifying database)
-            // string connectionString = "servaer=localhost;user id=root;password=;";
-
-            // Create the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Create a command to execute SQL statements
                 using (SqlCommand command = new SqlCommand("", connection))
                 {
-                    // Create the database
                     command.CommandText = $"CREATE DATABASE {databaseName}";
                     command.ExecuteNonQuery();
                 }
@@ -161,10 +157,10 @@ namespace Hotel_Management_System
             {
                 connection.Open();
                 // Create users
-                string createLoginTable1 = "CREATE TABLE users (id INT IDENTITY(1,1) PRIMARY KEY, userName VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL)";
+                string createLoginTable1 = "CREATE TABLE users (userId INT IDENTITY(1,1) PRIMARY KEY, userName VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, fullName VARCHAR(50), mobileNo char(10))";
                 using (SqlCommand createLoginTable1CommandText = new SqlCommand(createLoginTable1, connection))
                 {
-                   createLoginTable1CommandText.ExecuteNonQuery();
+                    createLoginTable1CommandText.ExecuteNonQuery();
                 }
             }
             AddDefaultUser();
@@ -209,7 +205,7 @@ namespace Hotel_Management_System
             {
                 connection.Open();
 
-                string createTable2CommandText = "CREATE TABLE reservation (reservationId INT IDENTITY(1,1) PRIMARY KEY, clientId INT, roomId INT, startDate DATE, closeDate DATE)";
+                string createTable2CommandText = "CREATE TABLE reservation (reservationId INT IDENTITY(1,1) PRIMARY KEY, clientId INT, roomId INT, startDate DATE, closeDate DATE, paymentType VARCHAR(10), paymentMethord VARCHAR(10), paymentAmount INT)";
                 using (SqlCommand createTable2Command = new SqlCommand(createTable2CommandText, connection))
                 {
                     createTable2Command.ExecuteNonQuery();
@@ -222,23 +218,17 @@ namespace Hotel_Management_System
             string userName = "admin";
             string password = "admin@123";
 
-            // SQL query to insert the default user
-            string query = $"INSERT INTO users (userName, password) VALUES (@userName, @password);";
+            string query = $"INSERT INTO users (userName, password, fullName) VALUES (@userName, @password, 'Admin');";
             string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
 
-            // Create a SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
             {
-                // Create a SqlCommand object with the query and connection
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    // Add parameters to the command
                     command.Parameters.AddWithValue("@userName", userName);
                     command.Parameters.AddWithValue("@password", password);
 
-                    // Open the connection
                     connection.Open();
-                    // Execute the query
                     command.ExecuteNonQuery();
                 }
             }
@@ -266,8 +256,9 @@ namespace Hotel_Management_System
                 tsProgressBar.Value = 100;
                 FormDashbord FormDashbord = new FormDashbord();
                 tsProgressBar.Value = 0;
+
+                Session.CurrentUserId = SetUserId(userName);
                 FormDashbord.ShowDialog();
-                // Redirect to main form or perform other actions here
             }
             else
             {
@@ -275,6 +266,27 @@ namespace Hotel_Management_System
                 tsProgressBar.Value = 0;
                 MessageBox.Show("Invalid username or password.");
             }
+        }
+
+        private int SetUserId(string userName)
+        {
+            int getUserId = 0;
+            string query = "SELECT userId FROM users WHERE userName = @userName;";
+            string connectionStringWithDatabase = $"{connectionString};Initial Catalog=hotel_management";
+
+            using (SqlConnection connection = new SqlConnection(connectionStringWithDatabase))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@userName", userName);
+
+                    connection.Open();
+
+                    getUserId = (int)command.ExecuteScalar();
+                }
+            }
+            return getUserId;
+
         }
 
         private bool AuthenticateUser(string userName, string password)
@@ -292,6 +304,7 @@ namespace Hotel_Management_System
 
                     connection.Open();
                     count = (int)command.ExecuteScalar();
+
                 }
             }
 
@@ -313,9 +326,11 @@ namespace Hotel_Management_System
             txtPassword.PasswordChar = '⚫';
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            Hide();
+            signup signup1 = new signup();
+            signup1.Show();
         }
     }
 }
